@@ -1,23 +1,65 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useRef } from 'react';
+import Header from './components/Header';
+import Canvas from './components/Canvas';
+import Sidebar from './components/Sidebar';
 
 function App() {
+  const [texts, setTexts] = useState([]);
+  const [selectedTextId, setSelectedTextId] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [currentStep, setCurrentStep] = useState(-1);
+  const canvasRef = useRef(null);
+
+  const addText = () => {
+    const newText = { id: Date.now(), content: 'New Text', font: 'Arial', size: 16, color: '#000000', x: 50, y: 50 };
+    setTexts([...texts, newText]);
+    setSelectedTextId(newText.id);
+    addToHistory([...texts, newText]);
+  };
+
+  const updateText = (id, updates) => {
+    const updatedTexts = texts.map(text => text.id === id ? { ...text, ...updates } : text);
+    setTexts(updatedTexts);
+    addToHistory(updatedTexts);
+  };
+
+  const addToHistory = (newState) => {
+    const newHistory = history.slice(0, currentStep + 1);
+    newHistory.push(newState);
+    setHistory(newHistory);
+    setCurrentStep(newHistory.length - 1);
+  };
+
+  const undo = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+      setTexts(history[currentStep - 1]);
+    }
+  };
+
+  const redo = () => {
+    if (currentStep < history.length - 1) {
+      setCurrentStep(currentStep + 1);
+      setTexts(history[currentStep + 1]);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex flex-col h-screen">
+      <Header undo={undo} redo={redo} />
+      <div className="flex flex-1 overflow-hidden">
+        <Canvas 
+          texts={texts} 
+          updateText={updateText} 
+          canvasRef={canvasRef} 
+          setSelectedTextId={setSelectedTextId}
+        />
+        <Sidebar 
+          addText={addText} 
+          updateText={updateText} 
+          selectedText={texts.find(t => t.id === selectedTextId)}
+        />
+      </div>
     </div>
   );
 }
