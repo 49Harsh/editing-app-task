@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from './components/Header';
 import Canvas from './components/Canvas';
 import Sidebar from './components/Sidebar';
+import KeyFeatureButton from './components/KeyFeatureButton';
 
 function App() {
   const [texts, setTexts] = useState([]);
@@ -57,7 +58,7 @@ const moveText = (id, newX, newY) => {
 return (
   <div className="flex flex-col h-screen">
     <Header undo={undo} redo={redo} />
-    <div className="flex flex-1 overflow-hidden flex-row justify-evenly">
+    <div className="flex flex-1 overflow-hidden  flex-row justify-evenly">
       <Canvas 
         texts={texts} 
         updateText={updateText} 
@@ -70,6 +71,8 @@ return (
         selectedText={texts.find(t => t.id === selectedTextId)}
       />
     </div>
+    
+
   </div>
   );
 }
