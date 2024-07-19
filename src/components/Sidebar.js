@@ -1,6 +1,10 @@
 import React from 'react';
 
 function Sidebar({ addText, updateText, selectedText }) {
+
+
+  // yaha hamne apne editing tools ko store krk rkha hai hm or bhi add krskte hain
+
   const fonts = ['Arial', 'Verdana', 'Times New Roman', 'Courier'];
   const sizes = Array.from({ length: 17 }, (_, i) => i + 8);
   const colors = ['#000000', '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF'];
@@ -30,7 +34,7 @@ function Sidebar({ addText, updateText, selectedText }) {
   };
 
   return (
-    <div className="w-64 bg-gray-100 p-4 border border-gray-900 ">
+    <div className="w-64 bg-gray-100 p-4 ">
       <h2 className="text-lg font-bold mb-4">Text Properties</h2>
       {selectedText ? (
         <>
@@ -43,6 +47,7 @@ function Sidebar({ addText, updateText, selectedText }) {
               className="w-full p-2 border rounded"
             />
           </div>
+          
           <div className="mb-4">
             <label className="block mb-2">Font:</label>
             <select 

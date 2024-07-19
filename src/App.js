@@ -54,24 +54,23 @@ const moveText = (id, newX, newY) => {
 };
 
 
-  return (
-    <div className="flex flex-col h-screen">
-      <Header undo={undo} redo={redo} />
-      <div className="flex flex-1 overflow-hidden bg-red flex-row justify-end">
-       <Canvas 
-          texts={texts} 
-          updateText={updateText} 
-          canvasRef={canvasRef} 
-          setSelectedTextId={setSelectedTextId}
-          moveText={moveText}
-        />
-        <Sidebar 
-          addText={addText} 
-          updateText={updateText} 
-          selectedText={texts.find(t => t.id === selectedTextId)}
-        />
-      </div>
+return (
+  <div className="flex flex-col h-screen">
+    <Header undo={undo} redo={redo} />
+    <div className="flex flex-1 overflow-hidden">
+      <Canvas 
+        texts={texts} 
+        updateText={updateText} 
+        setSelectedTextId={setSelectedTextId}
+        moveText={moveText}
+      />
+      <Sidebar 
+        addText={addText} 
+        updateText={updateText} 
+        selectedText={texts.find(t => t.id === selectedTextId)}
+      />
     </div>
+  </div>
   );
 }
 
