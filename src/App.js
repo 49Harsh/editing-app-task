@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Header from './components/Header';
 import Canvas from './components/Canvas';
 import Sidebar from './components/Sidebar';
-import KeyFeatureButton from './components/KeyFeatureButton';
+
 
 function App() {
   const [texts, setTexts] = useState([]);
