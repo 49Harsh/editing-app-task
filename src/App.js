@@ -8,7 +8,7 @@ function App() {
   const [selectedTextId, setSelectedTextId] = useState(null);
   const [history, setHistory] = useState([]);
   const [currentStep, setCurrentStep] = useState(-1);
-  const canvasRef = useRef(null);
+
 
   const addText = () => {
     const newText = { id: Date.now(), content: 'New Text', font: 'Arial', size: 16, color: '#000000', x: 50, y: 50 };
