@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Header from './components/Header';
 import Canvas from './components/Canvas';
 import Sidebar from './components/Sidebar';
@@ -57,7 +57,7 @@ const moveText = (id, newX, newY) => {
 return (
   <div className="flex flex-col h-screen">
     <Header undo={undo} redo={redo} />
-    <div className="flex flex-1 overflow-hidden">
+    <div className="flex flex-1 overflow-hidden flex-row justify-evenly">
       <Canvas 
         texts={texts} 
         updateText={updateText} 
