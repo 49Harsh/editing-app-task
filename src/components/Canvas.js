@@ -1,6 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-function Canvas({ texts, updateText, canvasRef, setSelectedTextId }) {
+function Canvas({ texts, updateText, canvasRef, setSelectedTextId, moveText }) {
+  const [isDragging, setIsDragging] = useState(false);
+  const [draggedTextId, setDraggedTextId] = useState(null);
+  const [startX, setStartX] = useState(0);
+  const [startY, setStartY] = useState(0);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -13,7 +18,7 @@ function Canvas({ texts, updateText, canvasRef, setSelectedTextId }) {
     });
   }, [texts, canvasRef]);
 
-  const handleCanvasClick = (e) => {
+  const handleMouseDown = (e) => {
     const rect = canvasRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -24,19 +29,39 @@ function Canvas({ texts, updateText, canvasRef, setSelectedTextId }) {
     );
     
     if (clickedText) {
+      setIsDragging(true);
+      setDraggedTextId(clickedText.id);
+      setStartX(x - clickedText.x);
+      setStartY(y - clickedText.y);
       setSelectedTextId(clickedText.id);
     } else {
       setSelectedTextId(null);
     }
   };
 
+  const handleMouseMove = (e) => {
+    if (isDragging) {
+      const rect = canvasRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      moveText(draggedTextId, x - startX, y - startY);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    setDraggedTextId(null);
+  };
+
   return (
     <canvas 
       ref={canvasRef}
-      width={800}
-      height={600}
-      className="border border-gray-300"
-      onClick={handleCanvasClick}
+      className="border border-gray-300 w-[70%] h-[65%] "
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
     />
   );
 }

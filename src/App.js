@@ -44,15 +44,24 @@ function App() {
     }
   };
 
+  const moveText = (id, newX, newY) => {
+    const updatedTexts = texts.map(text => 
+      text.id === id ? { ...text, x: newX, y: newY } : text
+    );
+    setTexts(updatedTexts);
+    addToHistory(updatedTexts);
+  };
+
   return (
     <div className="flex flex-col h-screen">
       <Header undo={undo} redo={redo} />
-      <div className="flex flex-1 overflow-hidden">
-        <Canvas 
+      <div className="flex flex-1 overflow-hidden bg-red flex-row justify-end">
+       <Canvas 
           texts={texts} 
           updateText={updateText} 
           canvasRef={canvasRef} 
           setSelectedTextId={setSelectedTextId}
+          moveText={moveText}
         />
         <Sidebar 
           addText={addText} 

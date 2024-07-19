@@ -30,7 +30,7 @@ function Sidebar({ addText, updateText, selectedText }) {
   };
 
   return (
-    <div className="w-64 bg-gray-100 p-4">
+    <div className="w-64 bg-gray-100 p-4 border border-gray-900 ">
       <h2 className="text-lg font-bold mb-4">Text Properties</h2>
       {selectedText ? (
         <>
