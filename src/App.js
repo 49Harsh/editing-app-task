@@ -44,13 +44,15 @@ function App() {
     }
   };
 
-  const moveText = (id, newX, newY) => {
-    const updatedTexts = texts.map(text => 
-      text.id === id ? { ...text, x: newX, y: newY } : text
-    );
-    setTexts(updatedTexts);
-    addToHistory(updatedTexts);
-  };
+  // fixing in MOVE EFFECT 
+
+const moveText = (id, newX, newY) => {
+  const updatedTexts = texts.map(text => 
+    text.id === id ? { ...text, x: newX, y: newY } : text
+  );
+  setTexts(updatedTexts);
+};
+
 
   return (
     <div className="flex flex-col h-screen">
